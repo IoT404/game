@@ -4,12 +4,17 @@ import time
 from UserString import MutableString
 
 pygame.init()
+
+WHITE = (48, 48, 48)
+manx = 0
+many = 0  
 pixelx = 60
 pixely = 60
 tilex = 10
 tiley = 8
 displayx = pixelx * tilex
 displayy = pixely * tiley
+iotcount = 0
 iotcaption = "Skokoban"
 pygame.display.set_caption(iotcaption)
 
@@ -55,14 +60,12 @@ iotstage = [
 ]
 
 stagenum = 0
-iotcaption = "Skokoban [Stage : %d]" % (stagenum + 1)
+iotcaption = "Skokoban [Stage : %d][move : %d]" % (stagenum + 1, iotcount)
 pygame.display.set_caption(iotcaption)
 iotmap = []
 for istage in range(tiley):
     iotmap.append(iotstage[stagenum][istage][:])
-WHITE = (48, 48, 48)
-manx = 0
-many = 0  
+
 
 while True:
     DISPLAYSURF.fill(WHITE)
@@ -136,11 +139,14 @@ while True:
                     else:
                         manx = tempx
                         many = tempy
+                        continue
                 if '2' == iotstage[stagenum][tempy][tempx]:
                     iotmap[tempy][tempx] = '2'
                 else:
                     iotmap[tempy][tempx] = ' '
                 iotmap[many][manx] = '@'
+                iotcount = iotcount + 1
+                print iotcount
             else:
                 manx = tempx
                 many = tempy
