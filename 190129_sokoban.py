@@ -121,6 +121,11 @@ while True:
             elif event.key == pygame.K_RIGHT:
                 iotman = iotmanR
                 manx = manx+1
+            elif event.key == pygame.K_r:
+                iotmap = []
+                for istage in range(tiley):
+                    iotmap.append(iotstage[stagenum][istage][:])
+                break
             else:
                 continue
 
