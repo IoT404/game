@@ -1,13 +1,19 @@
-from UserString import MutableString
 import pygame
 import sys
 import time
+from UserString import MutableString
 
 pygame.init()
+pixelx = 60
+pixely = 60
+tilex = 10
+tiley = 8
+displayx = pixelx * tilex
+displayy = pixely * tiley
+iotcaption = "Skokoban"
+pygame.display.set_caption(iotcaption)
 
-DISPLAYSURF = pygame.display.set_mode((600, 480), 0, 32)
-pygame.display.set_caption('Skokoban')
-
+DISPLAYSURF = pygame.display.set_mode((displayx, displayy), 0, 32)
 iotwall = pygame.image.load('iot_wall.png')
 iotmanU = pygame.image.load('iot_manU.png')
 iotmanD = pygame.image.load('iot_manD.png')
@@ -49,8 +55,10 @@ iotstage = [
 ]
 
 stagenum = 0
+iotcaption = "Skokoban [Stage : %d]" % (stagenum + 1)
+pygame.display.set_caption(iotcaption)
 iotmap = []
-for istage in range(8):
+for istage in range(tiley):
     iotmap.append(iotstage[stagenum][istage][:])
 WHITE = (48, 48, 48)
 manx = 0
@@ -85,10 +93,14 @@ while True:
                 if event.type == pygame.KEYDOWN:
                     keyinput = True
                     break
-                if True == keyinput:
-                    break
-                time.sleep(0.1)
-                continue
+            if True == keyinput:
+                break
+            time.sleep(0.1)
+            continue
+        stagenum = stagenum + 1
+        iotmap = []
+        for istage in range(8):
+            iotmap.append(iotstage[stagenum][istage][:])
         
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
