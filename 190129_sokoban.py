@@ -67,8 +67,8 @@ many = 0
 while True:
     DISPLAYSURF.fill(WHITE)
     stageend = True
-    for ix in range(10):
-        for iy in range(8):
+    for ix in range(tilex):
+        for iy in range(tiley):
             if '#' == iotmap [iy][ix]:
                 DISPLAYSURF.blit(iotwall, (ix * 60, iy * 60))
             elif '@' == iotmap [iy][ix]:
@@ -99,9 +99,12 @@ while True:
             continue
         stagenum = stagenum + 1
         iotmap = []
-        for istage in range(8):
+        for istage in range(tiley):
             iotmap.append(iotstage[stagenum][istage][:])
-        
+            iotcaption = "Skokoban [Stage : %d]" % (stagenum + 1)
+            pygame.display.set_caption(iotcaption)
+            continue
+
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
             tempx = manx
@@ -120,7 +123,7 @@ while True:
                 manx = manx+1
             else:
                 continue
-# if ' ' == iotmap[many][manx] or '2' == iotmap[many][manx]:
+
             if '#' != iotmap[many][manx]:
                 if '1' == iotmap[many][manx]:
                     if ' ' == iotmap[2 * many - tempy][2 * manx - tempx] or '2' == iotmap[2 * many - tempy][2 * manx - tempx]:
