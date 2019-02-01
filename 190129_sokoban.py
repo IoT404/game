@@ -68,20 +68,9 @@ for istage in range(tiley):
     iotmap.append(iotstage[stagenum][istage][:])
 
 def iotdraw():
-    global tilex
-    global tiley
-    global iotmap
-    global iotwall
-    global pixelx
-    global pixely
     global manx
     global many
-    global iotman
-    global iotobj1
-    global iotstage
-    global stagenum
     global stageend
-    global iotobj2
 
     for ix in range(tilex):
         for iy in range(tiley):
