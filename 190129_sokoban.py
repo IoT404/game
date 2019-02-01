@@ -15,10 +15,8 @@ tiley = 8
 displayx = pixelx * tilex
 displayy = pixely * tiley
 iotcount = 0
-iotcaption = "Skokoban"
-pygame.display.set_caption(iotcaption)
+DISPLAYSURF = None
 
-DISPLAYSURF = pygame.display.set_mode((displayx, displayy), 0, 32)
 iotwall = pygame.image.load('iot_wall.png')
 iotmanU = pygame.image.load('iot_manU.png')
 iotmanD = pygame.image.load('iot_manD.png')
@@ -70,7 +68,8 @@ def iotloadmap():
     for istage in range(tiley):
         iotmap.append(iotstage[stagenum][istage][:])
 
-iotloadmap()
+def iotsetcaption(caption):
+    pygame.display.set_caption(caption)
 
 def iotdraw():
     global manx
@@ -95,9 +94,17 @@ def iotdraw():
             elif '2' == iotmap [iy][ix]:
                 DISPLAYSURF.blit(iotobj2, (ix * pixelx, iy * pixely))
 
-while True:
+def iotinit():
+    global DISPLAYSURF
 
+    iotloadmap()
+    iotcaption = "Skokoban"
     pygame.display.set_caption(iotcaption)
+    DISPLAYSURF = pygame.display.set_mode((displayx, displayy), 0, 32)
+
+iotinit()
+
+while True:
 
     iotdraw()
 
@@ -121,7 +128,7 @@ while True:
         for istage in range(tiley):
             iotmap.append(iotstage[stagenum][istage][:])
         iotcount = 0
-        iotcaption = "Skokoban [Stage : %d][move : %d]" % (stagenum + 1, iotcount)
+        iotsetcaption("Skokoban [Stage : %d][move : %d]" % (stagenum + 1, iotcount))
         continue
 
     for event in pygame.event.get():
@@ -142,7 +149,7 @@ while True:
                 manx = manx+1
             elif event.key == pygame.K_r:
                 iotcount = 0
-                iotcaption = "Skokoban [Stage : %d][move : %d]" % (stagenum + 1, iotcount)
+                iotsetcaption("Skokoban [Stage : %d][move : %d]" % (stagenum + 1, iotcount))
                 iotmap = []
                 for istage in range(tiley):
                     iotmap.append(iotstage[stagenum][istage][:])
@@ -152,7 +159,9 @@ while True:
 
             if '#' != iotmap[many][manx]:
                 if '1' == iotmap[many][manx]:
-                    if ' ' == iotmap[2 * many - tempy][2 * manx - tempx] or '2' == iotmap[2 * many - tempy][2 * manx - tempx]:
+                    if ' ' == iotmap[2 * many - tempy][2 * manx - tempx]:
+                        iotmap[2 * many - tempy][2 * manx - tempx] = '1'
+                    elif '2' == iotmap[2 * many - tempy][2 * manx - tempx]:
                         iotmap[2 * many - tempy][2 * manx - tempx] = '1'
                     else:
                         manx = tempx
@@ -164,7 +173,7 @@ while True:
                     iotmap[tempy][tempx] = ' '
                 iotmap[many][manx] = '@'
                 iotcount = iotcount + 1
-                iotcaption = "Skokoban [Stage : %d][move : %d]" % (stagenum + 1, iotcount)
+                iotsetcaption("Skokoban [Stage : %d][move : %d]" % (stagenum + 1, iotcount))
             else:
                 manx = tempx
                 many = tempy
