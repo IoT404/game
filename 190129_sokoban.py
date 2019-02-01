@@ -64,13 +64,21 @@ iotcaption = "Skokoban [Stage : %d][move : %d]" % (stagenum + 1, iotcount)
 pygame.display.set_caption(iotcaption)
 iotmap = []
 
-for istage in range(tiley):
-    iotmap.append(iotstage[stagenum][istage][:])
+def iotloadmap():
+    global iotmap
+    
+    for istage in range(tiley):
+        iotmap.append(iotstage[stagenum][istage][:])
+
+iotloadmap()
 
 def iotdraw():
     global manx
     global many
     global stageend
+
+    DISPLAYSURF.fill(WHITE)
+    stageend = True
 
     for ix in range(tilex):
         for iy in range(tiley):
@@ -86,14 +94,13 @@ def iotdraw():
                     stageend = False
             elif '2' == iotmap [iy][ix]:
                 DISPLAYSURF.blit(iotobj2, (ix * pixelx, iy * pixely))
-    
+
 while True:
-    DISPLAYSURF.fill(WHITE)
+
     pygame.display.set_caption(iotcaption)
-    stageend = True
 
     iotdraw()
-    
+
     pygame.display.update()
 
     if True == stageend:
