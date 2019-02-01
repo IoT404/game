@@ -4,6 +4,7 @@ WHITE         = (48, 48, 48)
 displaywidth  = 470
 displayheight = 840
 displayobj    = None
+clock         = None
 imgback       = pygame.image.load('image/back.png')
 
 
@@ -18,7 +19,7 @@ def iotbackdraw():
 
 def iotgo():
     global displayobj
-    #global clock
+    global clock
 
     while True:
         for event in pygame.event.get():
@@ -31,15 +32,17 @@ def iotgo():
         displayobj.fill(WHITE)
         iotbackdraw()
         pygame.display.update()
+        clock.tick(60)
     pygame.quit()
 
 def base():
     global displayobj
-    #global clock
+    global clock
 
     pygame.init()
     iotsetcaption("IoT Game")
     displayobj = pygame.display.set_mode((displaywidth, displayheight))
+    clock = pygame.time.Clock()
 
     iotgo()
 
