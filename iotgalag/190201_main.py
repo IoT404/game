@@ -5,21 +5,22 @@ displaywidth  = 470
 displayheight = 840
 displayobj    = None
 clock         = None
-imgback       = pygame.image.load('image/back.png')
-
+imgbackA      = pygame.image.load('image/back.png')
+imgbackB      = imgbackA.copy()
 
 def iotsetcaption(caption):
     pygame.display.set_caption(caption)
 
-def iotbackdraw():
+def iotbackdraw(image, x, y):
     global displayobj
-    global imgback
-
-    displayobj.blit(imgback, (0, 0))
+    displayobj.blit(image, (x, y))
 
 def iotgo():
     global displayobj
     global clock
+
+    backAposy = 0
+    backBposy = -displayheight
 
     while True:
         for event in pygame.event.get():
@@ -29,8 +30,19 @@ def iotgo():
         if key[pygame.K_SPACE]:
             pygame.quit()
             break
+
+        backAposy = backAposy + 2
+        backBposy = backBposy + 2
+
+        if displayheight <= backAposy:
+            backAposy = 0
+            backBposy = -displayheight
+
+
         displayobj.fill(WHITE)
-        iotbackdraw()
+        iotbackdraw(imgbackA, 0, backAposy)
+        iotbackdraw(imgbackB, 0, backBposy)
+
         pygame.display.update()
         clock.tick(60)
     pygame.quit()
