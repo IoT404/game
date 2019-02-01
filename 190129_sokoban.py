@@ -63,10 +63,13 @@ stagenum = 0
 iotcaption = "Skokoban [Stage : %d][move : %d]" % (stagenum + 1, iotcount)
 pygame.display.set_caption(iotcaption)
 iotmap = []
+
 for istage in range(tiley):
     iotmap.append(iotstage[stagenum][istage][:])
 
-
+def iotdraw():
+    print "iotdraw"
+    
 while True:
     DISPLAYSURF.fill(WHITE)
     pygame.display.set_caption(iotcaption)
@@ -107,7 +110,7 @@ while True:
             iotmap.append(iotstage[stagenum][istage][:])
         iotcount = 0
         iotcaption = "Skokoban [Stage : %d][move : %d]" % (stagenum + 1, iotcount)
-            continue
+        continue
 
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
@@ -117,6 +120,7 @@ while True:
                 iotman = iotmanU
                 many = many-1
             elif event.key == pygame.K_DOWN:
+                iotdraw()
                 iotman = iotmanD
                 many = many+1
             elif event.key == pygame.K_LEFT:
