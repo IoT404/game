@@ -69,6 +69,7 @@ for istage in range(tiley):
 
 while True:
     DISPLAYSURF.fill(WHITE)
+    pygame.display.set_caption(iotcaption)
     stageend = True
     for ix in range(tilex):
         for iy in range(tiley):
@@ -104,8 +105,8 @@ while True:
         iotmap = []
         for istage in range(tiley):
             iotmap.append(iotstage[stagenum][istage][:])
-            iotcaption = "Skokoban [Stage : %d]" % (stagenum + 1)
-            pygame.display.set_caption(iotcaption)
+        iotcount = 0
+        iotcaption = "Skokoban [Stage : %d][move : %d]" % (stagenum + 1, iotcount)
             continue
 
     for event in pygame.event.get():
@@ -125,6 +126,8 @@ while True:
                 iotman = iotmanR
                 manx = manx+1
             elif event.key == pygame.K_r:
+                iotcount = 0
+                iotcaption = "Skokoban [Stage : %d][move : %d]" % (stagenum + 1, iotcount)
                 iotmap = []
                 for istage in range(tiley):
                     iotmap.append(iotstage[stagenum][istage][:])
@@ -146,7 +149,7 @@ while True:
                     iotmap[tempy][tempx] = ' '
                 iotmap[many][manx] = '@'
                 iotcount = iotcount + 1
-                print iotcount
+                iotcaption = "Skokoban [Stage : %d][move : %d]" % (stagenum + 1, iotcount)
             else:
                 manx = tempx
                 many = tempy
