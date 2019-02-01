@@ -68,27 +68,43 @@ for istage in range(tiley):
     iotmap.append(iotstage[stagenum][istage][:])
 
 def iotdraw():
-    print "iotdraw"
+    global tilex
+    global tiley
+    global iotmap
+    global iotwall
+    global pixelx
+    global pixely
+    global manx
+    global many
+    global iotman
+    global iotobj1
+    global iotstage
+    global stagenum
+    global stageend
+    global iotobj2
+
+    for ix in range(tilex):
+        for iy in range(tiley):
+            if '#' == iotmap [iy][ix]:
+                DISPLAYSURF.blit(iotwall, (ix * pixelx, iy * pixely))
+            elif '@' == iotmap [iy][ix]:
+                manx = ix
+                many = iy
+                DISPLAYSURF.blit(iotman, (ix * pixelx, iy * pixely))
+            elif '1' == iotmap [iy][ix]:
+                DISPLAYSURF.blit(iotobj1, (ix * pixelx, iy * pixely))
+                if '2' != iotstage[stagenum][iy][ix]:
+                    stageend = False
+            elif '2' == iotmap [iy][ix]:
+                DISPLAYSURF.blit(iotobj2, (ix * pixelx, iy * pixely))
     
 while True:
     DISPLAYSURF.fill(WHITE)
     pygame.display.set_caption(iotcaption)
     stageend = True
-    for ix in range(tilex):
-        for iy in range(tiley):
-            if '#' == iotmap [iy][ix]:
-                DISPLAYSURF.blit(iotwall, (ix * 60, iy * 60))
-            elif '@' == iotmap [iy][ix]:
-                manx = ix
-                many = iy
-                DISPLAYSURF.blit(iotman, (ix * 60, iy * 60))
-            elif '1' == iotmap [iy][ix]:
-                DISPLAYSURF.blit(iotobj1, (ix * 60, iy * 60))
-                if '2' != iotstage[stagenum][iy][ix]:
-                    stageend = False
-            elif '2' == iotmap [iy][ix]:
-                DISPLAYSURF.blit(iotobj2, (ix * 60, iy * 60))
 
+    iotdraw()
+    
     pygame.display.update()
 
     if True == stageend:
@@ -120,7 +136,6 @@ while True:
                 iotman = iotmanU
                 many = many-1
             elif event.key == pygame.K_DOWN:
-                iotdraw()
                 iotman = iotmanD
                 many = many+1
             elif event.key == pygame.K_LEFT:
