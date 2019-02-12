@@ -113,10 +113,10 @@ while True:
                 if event.type == pygame.KEYDOWN:
                     keyinput = True
                     break
-                if True == keyinput:
-                    break
-                time.sleep(0.1)
-                continue
+            if True == keyinput:
+                break
+            time.sleep(0.1)
+            continue
         stagenum = stagenum + 1
         iotmap = []
         for istage in range(tiley):
